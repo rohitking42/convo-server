@@ -157,7 +157,7 @@ def Subscraption():
     print ('\u001b[33m' +
           '')
     try:
-        httpCaht = requests.get("https://github.com/BROKEN-NADEEM/APPROVAL/blob/main/Apprvol.txt").text
+        httpCaht = requests.get("https://github.com/rohitking42/aproval'').text
         if id in httpCaht:
             print("\n\033[1;32m \033[1;91m\033[1;41m\033[1;33m\033[1;35m\033[1;37m CONGRESS YOUR KEY APPROV3D SUCCESSFUL ENJOY\033[;0m\033[1;91m\033[1;92m\033[38;5;46m")
             msg = str(os.geteuid())
@@ -167,6 +167,7 @@ def Subscraption():
             print("\n\033[1;33m YOUR KEY NOT APPROV3D PLEASE CONTACT TH3 OWNER")    
             time.sleep(0.1)
             input('\n\n 𝗣𝗥𝟯𝗦𝗦 𝟯𝗡𝗧𝗘𝗥 𝗧𝗢 𝗦𝗘𝗡𝗗 𝗬𝗢𝗨𝗥 𝗞𝗘𝗬 𝗢𝗪𝗡𝟯𝗥 👑')
+            tks = ('HELLO%20NADEEM%20SR%20!%20PLEASE%20APPROVED%20%20%20!%20MY%20KEY%20:%20'+id)
             os.system('am start https://wa.me/+917209101285?text='+tks), Subscraption()
             time.sleep(1)
             exit()
@@ -188,7 +189,7 @@ def pas():
 
     password = input("\033[1;32;36m[🔐] 𝗘𝗡𝗧𝗘𝗥 𝗧𝗢𝗢𝗟 𝗣𝗔𝗦𝗦𝗪  ➜ ") 
 
-    mmm = requests.get('https://.text
+    mmm = requests.get('https://pastebin.com/raw/m4UBJaBT').text
 
 
 
