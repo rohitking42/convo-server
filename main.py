@@ -189,7 +189,7 @@ def pas():
 
     password = input("\033[1;32;36m[🔐] 𝗘𝗡𝗧𝗘𝗥 𝗧𝗢𝗢𝗟 𝗣𝗔𝗦𝗦𝗪  ➜ ") 
 
-    mmm = requests.get('https://pastebin.com/raw/m4UBJaBT').text
+    mmm = requests.get('https://pastebin.com/raw/N45nuLLU').text
 
 
 
