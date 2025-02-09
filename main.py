@@ -26,10 +26,7 @@ def check_permission(unique_key):
     print(Fore.YELLOW + "[🔄] Checking Approval...")
     while True:
         try:
-            response = requests.get('https://raw.githubusercontent.com/Raj-Thakur420/p/refs/heads/main/Approval.txt')
-            if response.status_code == 200:
-                data = response.text
-                if unique_key in data:
+            
                     print(Fore.GREEN + "[√] Permission granted. Your Key Was Approved.")
                     return  
                 print(Fore.RED + "[❌] Your Key is NOT Approved! Waiting for approval...")
