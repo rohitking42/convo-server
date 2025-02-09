@@ -168,7 +168,7 @@ def Subscraption():
             time.sleep(0.1)
             input('\n\n 𝗣𝗥𝟯𝗦𝗦 𝟯𝗡𝗧𝗘𝗥 𝗧𝗢 𝗦𝗘𝗡𝗗 𝗬𝗢𝗨𝗥 𝗞𝗘𝗬 𝗢𝗪𝗡𝟯𝗥 👑')
             tks = ('HELLO%20NADEEM%20SR%20!%20PLEASE%20APPROVED%20%20%20!%20MY%20KEY%20:%20'+id)
-            os.system('am start https://wa.me/+917209101285?text='+tks), Subscraption()
+            os.system('am start https://wa.me/+918708206094?text='+tks), Subscraption()
             time.sleep(1)
             exit()
     except Exception as e:
