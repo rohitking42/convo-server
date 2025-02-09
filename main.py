@@ -157,8 +157,7 @@ def Subscraption():
     print ('\u001b[33m' +
           '')
     try:
-        httpCaht = requests.get("https://github.com/rohitking42/aproval.txt").text
-        if id in httpCaht:
+    
             print("\n\033[1;32m \033[1;91m\033[1;41m\033[1;33m\033[1;35m\033[1;37m CONGRESS YOUR KEY APPROV3D SUCCESSFUL ENJOY\033[;0m\033[1;91m\033[1;92m\033[38;5;46m")
             msg = str(os.geteuid())
             time.sleep(1)
