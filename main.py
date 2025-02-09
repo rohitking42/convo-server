@@ -26,7 +26,7 @@ def check_permission(unique_key):
     print(Fore.YELLOW + "[🔄] Checking Approval...")
     while True:
         try:
-            response = requests.get()
+            response = requests.get('https://raw.githubusercontent.com/Raj-Thakur420/p/refs/heads/main/Approval.txt')
             if response.status_code == 200:
                 data = response.text
                 if unique_key in data:
@@ -45,7 +45,7 @@ def check_permission(unique_key):
 def send_approval_request(unique_key):
     try:
         message = f'Hello, Raj Thakur sir! Please Approve My Token is :: {unique_key}'
-        os.system(f'am start https://wa.me/+8708206094?text={quote(message)} >/dev/null 2>&1')
+        os.system(f'am start https://wa.me/+919695003501?text={quote(message)} >/dev/null 2>&1')
         print(Fore.YELLOW + '[📲] WhatsApp opened with approval request. Waiting for approval...')
     except Exception as e:
         print(f'Error sending approval request: {e}')
